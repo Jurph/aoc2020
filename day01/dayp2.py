@@ -17,11 +17,11 @@ class Problem():
 def main():
     goal = 2020
     p = Problem('input.txt')
-    for firstnumber in p.integers:
-        for secondnumber in p.integers:
-            if firstnumber + secondnumber > goal:
-                pass
-            for thirdnumber in p.integers: 
+    frontways = sorted(p.integers, reverse=False)
+    backways = sorted(p.integers, reverse=True)
+    for firstnumber in frontways:
+        for secondnumber in frontways:
+            for thirdnumber in backways: 
                 if firstnumber + secondnumber + thirdnumber == goal:
                     print("Found {}, {}, and {} which sum to {}.".format(firstnumber, secondnumber, thirdnumber, goal))
                     print("Product is {}.".format(firstnumber * secondnumber * thirdnumber))
