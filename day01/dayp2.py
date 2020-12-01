@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# Day 1, Part 1 of Advent of Code 2020
+# Day 1, Part 2 of Advent of Code 2020
+import time
 
 # Sketch in a generic class for holding the input
 class Problem():
@@ -14,9 +15,11 @@ class Problem():
         self.integers = integers
         return
 
+
 def main():
     goal = 2020
     p = Problem('input.txt')
+    unsorted = p.integers 
     frontways = sorted(p.integers, reverse=False)
     backways = sorted(p.integers, reverse=True)
     for firstnumber in frontways:
@@ -29,4 +32,8 @@ def main():
     return
 
 if __name__ == "__main__":
+    tic = time.perf_counter()
     main()
+    toc = time.perf_counter()
+    elapsed = toc - tic 
+    print("Main() executed in {:.6f} seconds".format(elapsed))
