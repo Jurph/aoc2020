@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Day 3, Part 1 of Advent of Code 2020
+# Day 3, Part 2 of Advent of Code 2020
 
 # Input class
 class Problem():
