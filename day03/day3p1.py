@@ -12,15 +12,16 @@ class Problem():
             for line in file:
                 rows.append(line.rstrip())
         self.rows = rows
+        print("Ingested {} rows.".format(len(rows)))
         return
 
 class Row():
-    def __init__(self, row=list):
+    def __init__(self, row=str):
         self.row = row
         self.width = len(self.row)
         terrain = []
-        for index, item in enumerate(self.row):
-            terrain[index] = self.istree(item)
+        for item in self.row:
+            terrain.append(self.istree(item))
         self.terrain = terrain 
         return
 
@@ -34,20 +35,28 @@ class Row():
             return False
         return
 
-
-def main():
-    slope = 3 # slope is defined as N columns rightward to move for each downward step 
+def checkslope(rows, columns):
+    slope = columns # slope is defined as N columns rightward to move for each downward step 
     trees = 0 
     p = Problem('input.txt')
-    column = 1
+    column = 0
     for row in p.rows:
         r = Row(row)
-        if r.terrain[column]:
+        if r.terrain[(column)]:
+            print("Hit a tree at column {} of {}".format(column, r.width))
             trees += 1
         else:
             pass
+        print(row)
+        print("Column: {} // Width: {} // Trees: {}".format(column, r.width, trees))
         column = (column + slope) % (r.width)
-    print("Found {} trees going downhill.".format(trees))
+    return trees
+    
+def main():
+    rows = 1
+    columns = 3
+    trees = checkslope(rows, columns)
+    print("Found {} trees going downhill with slope {}:{}.".format(trees, columns, rows))
     return
 
 if __name__ == "__main__":
