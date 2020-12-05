@@ -40,8 +40,12 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertFalse(self.v.isYearBetween(str(ceiling+0.001), floor, ceiling))
         return
     
-    
-        
+    def test_hexcolors(self):
+        self.assertTrue(self.v.isColorString(self.v.hair))
+        self.assertTrue(self.v.isColorString('#000000'))
+        self.assertTrue(self.v.isColorString('#aabbcc'))
+        self.assertFalse(self.v.isColorString('#0x03aa'))
+        return        
 
 if __name__ == '__main__':
     unittest.main()

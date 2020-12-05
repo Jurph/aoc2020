@@ -2,6 +2,7 @@
 # Day 4, Part 2 of Advent of Code 2020
 
 # Adapting Nathan's elegant answer - what's going on here? 
+import re
 import unittest
 
 class CompletePassport(object):
@@ -61,7 +62,8 @@ class CompletePassport(object):
         elif hairstring[0] != "#":
             return False
         else: 
-            hexes = hairstring[1:6]
+            hexes = hairstring[1:7]
+
             try:
                 value = int(hexes, 16)
                 # print("allowing hex value: {}".format(hairstring))
