@@ -137,7 +137,7 @@ def main():
             print("Invalid!")
 
     print("Found {} valid records.".format(validrecords))
-    print("We appear to still be letting some bad records through.")
+    print("We appear to still be letting some bad records through.") # Solution does not produce the right answer, even though test data passes.
 
 if __name__ == '__main__':
     main()
