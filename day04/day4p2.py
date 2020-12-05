@@ -7,7 +7,7 @@ import unittest
 class CompletePassport(object):
     def __init__(self, rawpassport=dict):
         self.data = rawpassport
-        self.uid = self.data['pid']
+        self.pid = self.data['pid']
         self.issue = self.data['iyr']
         self.expire = self.data['eyr']
         self.birth = self.data['byr']
@@ -19,7 +19,7 @@ class CompletePassport(object):
     def validate(self):
         valideyes = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
         validfields = 0
-        validfields += 1 if self.isNineDigitInt(self.uid) else 0
+        validfields += 1 if self.isNineDigitInt(self.pid) else 0
         validfields += 2 if self.isYearBetween(self.issue, 2010, 2020) else 0
         validfields += 4 if self.isYearBetween(self.expire, 2020, 2030) else 0
         validfields += 8 if self.isYearBetween(self.birth, 1920, 2002) else 0
@@ -31,7 +31,7 @@ class CompletePassport(object):
 
     def display(self):
         valideyes = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
-        print("PASSPORT ID  : {}    : {}".format(self.uid, self.isNineDigitInt(self.uid)))
+        print("PASSPORT ID  : {}    : {}".format(self.pid, self.isNineDigitInt(self.pid)))
         print("ISSUED       : {}    : {}".format(self.issue, self.isYearBetween(self.issue, 2010, 2020)))
         print("EXPIRES      : {}    : {}".format(self.expire, self.isYearBetween(self.expire, 2020, 2030)))
         print("BIRTH YEAR   : {}    : {}".format(self.birth, self.isYearBetween(self.birth, 1920, 2002)))
@@ -95,6 +95,7 @@ class CompletePassport(object):
             converted = int(value) 
         except:
             # print("Not a year: {}".format(value))
+            converted = -1
             return False
         finally:
             if converted >= min and converted <= max:
