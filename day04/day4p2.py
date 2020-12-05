@@ -128,15 +128,16 @@ def main():
     validrecords = 0
     for r in records:
         print("-----")
+        r.display()
         if r.validate() == 127:
             print("OK // VALID")
-            r.display()
             validrecords += 1
         else:
             pass
             print("Invalid!")
 
     print("Found {} valid records.".format(validrecords))
+    print("We appear to still be letting some bad records through.")
 
 if __name__ == '__main__':
     main()
