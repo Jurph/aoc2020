@@ -39,13 +39,60 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertFalse(self.v.isYearBetween(str(floor-0.001), floor, ceiling))
         self.assertFalse(self.v.isYearBetween(str(ceiling+0.001), floor, ceiling))
         return
-    
+ 
     def test_hexcolors(self):
         self.assertTrue(self.v.isColorString(self.v.hair))
         self.assertTrue(self.v.isColorString('#000000'))
         self.assertTrue(self.v.isColorString('#aabbcc'))
-        self.assertFalse(self.v.isColorString('#0x03aa'))
-        return        
+        self.assertTrue(self.v.isColorString('#00bbcc'))
+        self.assertFalse(self.v.isColorString('#AABBCC'))  # capitals not permitted
+        self.assertFalse(self.v.isColorString('#0x03aa'))  # "0x" prefix not okay
+        self.assertFalse(self.v.isColorString('#bcdefg'))  # "g" is not valid hex
+        self.assertFalse(self.v.isColorString('000000'))   # needs leading "#"
+        self.assertFalse(self.v.isColorString('aabbcc'))  
+        self.assertFalse(self.v.isColorString('#ffffffff'))
+        return
+
+    def test_eyecolors(self):
+        valideyes = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+        self.assertTrue(self.v.eyes in valideyes)
+        self.assertTrue('amb' in valideyes)
+        self.assertTrue('blu' in valideyes)
+        self.assertTrue('brn' in valideyes)
+        self.assertTrue('gry' in valideyes)
+        self.assertTrue('grn' in valideyes)
+        self.assertTrue('hzl' in valideyes)
+        self.assertTrue('oth' in valideyes)
+        self.assertFalse('zzz' in valideyes)
+        self.assertFalse('grt' in valideyes)
+        self.assertFalse('xry' in valideyes)
+        self.assertFalse('gryy' in valideyes)
+        self.assertFalse('green' in valideyes)
+        self.assertFalse('#ffffff' in valideyes)
+        self.assertFalse('amblu' in valideyes)
+        self.assertFalse('hzloth' in valideyes)
+        return
+
+    def test_heights(self):
+        self.assertTrue(self.v.isValidHeight(self.v.height))
+        self.assertTrue(self.v.isValidHeight('59in'))
+        self.assertTrue(self.v.isValidHeight('76in'))
+        self.assertTrue(self.v.isValidHeight('150cm'))
+        self.assertTrue(self.v.isValidHeight('193cm'))
+        self.assertFalse(self.v.isValidHeight('194cm'))
+        self.assertFalse(self.v.isValidHeight('149cm'))
+        self.assertFalse(self.v.isValidHeight('59cm'))
+        self.assertFalse(self.v.isValidHeight('76cm'))
+        self.assertFalse(self.v.isValidHeight('58in'))
+        self.assertFalse(self.v.isValidHeight('77in'))
+        self.assertFalse(self.v.isValidHeight('151in'))
+        self.assertFalse(self.v.isValidHeight('192in'))
+        self.assertFalse(self.v.isValidHeight('59'))
+        self.assertFalse(self.v.isValidHeight('95'))
+        self.assertFalse(self.v.isValidHeight('cm'))
+        self.assertFalse(self.v.isValidHeight('150CM'))
+        self.assertFalse(self.v.isValidHeight('151in'))
+        return
 
 if __name__ == '__main__':
     unittest.main()

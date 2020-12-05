@@ -55,23 +55,20 @@ class CompletePassport(object):
             return False
 
     def isColorString(self, hairstring):
+        regex = "^#([a-f0-9]{6})$"
+        p = re.compile(regex)
         if not isinstance(hairstring, str):
             return False
         elif len(hairstring) != 7:
             return False
         elif hairstring[0] != "#":
             return False
-        else: 
-            hexes = hairstring[1:7]
+        elif re.search(p, hairstring):
+            return True
+        else:
+            return False
 
-            try:
-                value = int(hexes, 16)
-                # print("allowing hex value: {}".format(hairstring))
-                return True
-            except:
-                return False
-
-    def isValidHeight(self, heightstring):
+    def isValidHeight(self, heightstring=str):
         validunits = ['in', 'cm']
         if not isinstance(heightstring, str):
             return False
