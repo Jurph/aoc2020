@@ -26,26 +26,29 @@ class CompletePassport(object):
         validfields += 16 if self.isValidHeight(self.height) else 0
         validfields += 32 if self.isColorString(self.hair) else 0 
         validfields += 64 if (self.eyes) in valideyes else 0 
-        print("valid fields: {}".format(bin(validfields)))
+        # print("valid fields: {}".format(bin(validfields)))
         return validfields
 
     def display(self):
-        print("PASSPORT ID  : {}".format(self.uid))
-        print("ISSUED       : {}".format(self.issue))
-        print("EXPIRES      : {}".format(self.expire))
-        print("BIRTH YEAR   : {}".format(self.birth))
-        print("HEIGHT       : {}".format(self.height))
-        print("HAIR COLOR   : {}".format(self.hair))
-        print("EYE COLOR    : {}".format(self.eyes))
+        valideyes = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+        print("PASSPORT ID  : {}    : {}".format(self.uid, self.isNineDigitInt(self.uid)))
+        print("ISSUED       : {}    : {}".format(self.issue, self.isYearBetween(self.issue, 2010, 2020)))
+        print("EXPIRES      : {}    : {}".format(self.expire, self.isYearBetween(self.expire, 2020, 2030)))
+        print("BIRTH YEAR   : {}    : {}".format(self.birth, self.isYearBetween(self.birth, 1920, 2002)))
+        print("HEIGHT       : {}    : {}".format(self.height, self.isValidHeight(self.height)))
+        print("HAIR COLOR   : {}    : {}".format(self.hair, self.isColorString(self.hair)))
+        print("EYE COLOR    : {}    : {}".format(self.eyes, self.eyes in valideyes))
 
     def isNineDigitInt(self, numstring):
         if len(numstring) != 9:
+            # print("UID wrong length: {}".format(numstring))
             return False
         else: 
             pass
         try:
             value = int(numstring)
             if value > 0:
+                # print("UID: {}".format(numstring))
                 return True
         except:
             return False
@@ -61,6 +64,7 @@ class CompletePassport(object):
             hexes = hairstring[1:6]
             try:
                 value = int(hexes, 16)
+                # print("allowing hex value: {}".format(hairstring))
                 return True
             except:
                 return False
@@ -70,7 +74,7 @@ class CompletePassport(object):
         if not isinstance(heightstring, str):
             return False
         elif heightstring[-2:] not in validunits:
-            print("invalid height units")
+            # print("invalid height units {} in {}".format(heightstring[-2:], heightstring))
             return False
         else:
             try:
@@ -81,6 +85,7 @@ class CompletePassport(object):
                 elif units == 'cm' and height >= 150 and height <= 193:
                     return True
                 else:
+                    # print("Height measurement of {} not valid".format(heightstring))
                     return False
             except:
                 return False
@@ -89,9 +94,11 @@ class CompletePassport(object):
         try:
             converted = int(value) 
         except:
+            # print("Not a year: {}".format(value))
             return False
         finally:
             if converted >= min and converted <= max:
+                # print("{} is between {} and {}".format(value, min, max))
                 return True
             else:
                 return False
@@ -120,9 +127,13 @@ def main():
 
     validrecords = 0
     for r in records:
+        print("-----")
         if r.validate() == 127:
+            print("OK // VALID")
+            r.display()
             validrecords += 1
         else:
+            pass
             print("Invalid!")
 
     print("Found {} valid records.".format(validrecords))
