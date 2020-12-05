@@ -32,13 +32,14 @@ class Row():
             return False
         return
 
-def checkslope(rows, columns):
-    slope = columns # slope is defined as N columns rightward to move for each downward step 
+def checkslope(rowstep=int, columnstep=int):
+    slope = columnstep # slope is defined as N columns rightward to move for each downward step 
     trees = 0 
     p = Problem('input.txt')
     column = 0
-    for row in p.rows:
-        r = Row(row)
+    numrows = len(p.rows)
+    for row in range(0, numrows, rowstep):
+        r = Row(p.rows[row])
         if r.terrain[(column)]:
             # print("Hit a tree at column {} of {}".format(column, r.width))
             trees += 1
@@ -50,10 +51,15 @@ def checkslope(rows, columns):
     return trees
     
 def main():
-    rows = 1
-    columns = 3
-    trees = checkslope(rows, columns)
-    print("Found {} trees going downhill with slope {}:{}.".format(trees, columns, rows))
+    product = 1
+    slopes = [(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)]
+    for slope in slopes:
+        rows = slope[0]
+        columns = slope[1]
+        trees = checkslope(rows, columns)
+        print("Found {} trees going downhill with slope {}:{}.".format(trees, columns, rows))
+        product *= trees 
+        print("Product: {}".format(product))
     return
 
 if __name__ == "__main__":
