@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 # Day 4, Part 2 of Advent of Code 2020
 
-# Adapting Nathan's elegant answer - what's going on here? 
 import re
-import unittest
 
 class CompletePassport(object):
     def __init__(self, rawpassport=dict):
@@ -32,41 +30,22 @@ class CompletePassport(object):
 
     def display(self):
         valideyes = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
-        print("PASSPORT ID  : {}    : {}".format(self.pid, self.isNineDigitInt(self.pid)))
-        print("ISSUED       : {}    : {}".format(self.issue, self.isYearBetween(self.issue, 2010, 2020)))
-        print("EXPIRES      : {}    : {}".format(self.expire, self.isYearBetween(self.expire, 2020, 2030)))
-        print("BIRTH YEAR   : {}    : {}".format(self.birth, self.isYearBetween(self.birth, 1920, 2002)))
-        print("HEIGHT       : {}    : {}".format(self.height, self.isValidHeight(self.height)))
-        print("HAIR COLOR   : {}    : {}".format(self.hair, self.isColorString(self.hair)))
-        print("EYE COLOR    : {}    : {}".format(self.eyes, self.eyes in valideyes))
+        print("-=-=-=-=-    : {:10s}    : ".format('|.......|'))
+        print("PASSPORT ID  : {:10s}    : {} - 9 digits".format(self.pid, self.isNineDigitInt(self.pid)))
+        print("ISSUED       : {:10s}    : {} - 2010-2020".format(self.issue, self.isYearBetween(self.issue, 2010, 2020)))
+        print("EXPIRES      : {:10s}    : {} - 2020-2030".format(self.expire, self.isYearBetween(self.expire, 2020, 2030)))
+        print("BIRTH YEAR   : {:10s}    : {} - 1920-2002".format(self.birth, self.isYearBetween(self.birth, 1920, 2002)))
+        print("HEIGHT       : {:10s}    : {} - 59-76in, or 150-193cm".format(self.height, self.isValidHeight(self.height)))
+        print("HAIR COLOR   : {:10s}    : {} - 6 hex chars".format(self.hair, self.isColorString(self.hair)))
+        print("EYE COLOR    : {:10s}    : {} - Amb, Blu, Brn, Gry, Grn, Hzl, Oth".format(self.eyes, self.eyes in valideyes))
 
     def isNineDigitInt(self, numstring):
-        if len(numstring) != 9:
-            # print("UID wrong length: {}".format(numstring))
-            return False
-        else: 
-            pass
-        try:
-            value = int(numstring)
-            if value > 0:
-                # print("UID: {}".format(numstring))
-                return True
-        except:
-            return False
+        return bool(re.search('^[0-9]{9}$', numstring))
 
     def isColorString(self, hairstring):
         regex = "^#([a-f0-9]{6})$"
         p = re.compile(regex)
-        if not isinstance(hairstring, str):
-            return False
-        elif len(hairstring) != 7:
-            return False
-        elif hairstring[0] != "#":
-            return False
-        elif re.search(p, hairstring):
-            return True
-        else:
-            return False
+        return bool(re.search(p, hairstring))
 
     def isValidHeight(self, heightstring=str):
         validunits = ['in', 'cm']
@@ -127,17 +106,20 @@ def main():
 
     validrecords = 0
     for r in records:
-        print("-----")
-        r.display()
         if r.validate() == 127:
+            r.display()
             print("OK // VALID")
             validrecords += 1
         else:
             pass
-            print("Invalid!")
 
     print("Found {} valid records.".format(validrecords))
-    print("We appear to still be letting some bad records through.") # Solution does not produce the right answer, even though test data passes.
+    if validrecords > 160:
+        print("We appear to still be letting some bad records through.") # Solution does not produce the right answer, even though test data passes.
+    elif validrecords < 160:
+        print("Ruled out some valid records you shouldn't have.")
+    else:
+        print("Got 160 valid records - good work.")
 
 if __name__ == '__main__':
     main()

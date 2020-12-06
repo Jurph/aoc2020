@@ -14,8 +14,8 @@ class Entry():
     def __init__(self, boardingstring):
         self.binstring = boardingstring.replace("F", "0").replace("B", "1").replace("L", "0").replace("R", "1").rstrip("\n")
         self.value = int(self.binstring, 2)
-        self.row = int(self.binstring[:7], 2)
-        self.column = int(self.binstring[7:], 2)
+        self.row = int(self.binstring[:7], 2)       # unused in this problem!
+        self.column = int(self.binstring[7:], 2)    # unused in this problem!
         return
 
 def main():

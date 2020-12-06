@@ -16,14 +16,14 @@ class TestValidityCheckers(unittest.TestCase):
     def test_pids(self):
         self.assertTrue(self.v.isNineDigitInt(self.v.pid))
         self.assertTrue(self.v.isNineDigitInt('012345678'))
+        self.assertTrue(self.v.isNineDigitInt('000000000'))
         self.assertTrue(self.v.isNineDigitInt('000000001'))
         self.assertTrue(self.v.isNineDigitInt('999999999'))
-        self.assertFalse(self.v.isNineDigitInt('0123456789'))
         self.assertFalse(self.v.isNineDigitInt('01234567'))
         self.assertFalse(self.v.isNineDigitInt('01234567a'))
         self.assertFalse(self.v.isNineDigitInt('0x0123456'))
-        self.assertFalse(self.v.isNineDigitInt('000000000'))
         self.assertFalse(self.v.isNineDigitInt('-00000001'))
+        self.assertFalse(self.v.isNineDigitInt('0123456789'))        
         return
 
     def test_dates(self):
@@ -32,8 +32,8 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertTrue(self.v.isYearBetween(self.v.birth, 1920, 2002))
         self.assertTrue(self.v.isYearBetween(self.v.issue, 2010, 2020))
         self.assertTrue(self.v.isYearBetween(self.v.expire, 2020, 2030))
-        self.assertTrue(self.v.isYearBetween(floor, floor, ceiling))
-        self.assertTrue(self.v.isYearBetween(ceiling, floor, ceiling))
+        self.assertTrue(self.v.isYearBetween(str(floor), floor, ceiling))
+        self.assertTrue(self.v.isYearBetween(str(ceiling), floor, ceiling))
         self.assertFalse(self.v.isYearBetween(str(floor-1), floor, ceiling))
         self.assertFalse(self.v.isYearBetween(str(ceiling+1), floor, ceiling))
         self.assertFalse(self.v.isYearBetween(str(floor-0.001), floor, ceiling))
@@ -45,11 +45,11 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertTrue(self.v.isColorString('#000000'))
         self.assertTrue(self.v.isColorString('#aabbcc'))
         self.assertTrue(self.v.isColorString('#00bbcc'))
+        self.assertFalse(self.v.isColorString('000000'))   # needs leading "#"
+        self.assertFalse(self.v.isColorString('aabbcc'))        
         self.assertFalse(self.v.isColorString('#AABBCC'))  # capitals not permitted
         self.assertFalse(self.v.isColorString('#0x03aa'))  # "0x" prefix not okay
-        self.assertFalse(self.v.isColorString('#bcdefg'))  # "g" is not valid hex
-        self.assertFalse(self.v.isColorString('000000'))   # needs leading "#"
-        self.assertFalse(self.v.isColorString('aabbcc'))  
+        self.assertFalse(self.v.isColorString('#bcdefg'))  # "g" is not valid hex  
         self.assertFalse(self.v.isColorString('#ffffffff'))
         return
 
@@ -63,14 +63,15 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertTrue('grn' in valideyes)
         self.assertTrue('hzl' in valideyes)
         self.assertTrue('oth' in valideyes)
+        self.assertFalse('AMB' in valideyes)
         self.assertFalse('zzz' in valideyes)
         self.assertFalse('grt' in valideyes)
         self.assertFalse('xry' in valideyes)
         self.assertFalse('gryy' in valideyes)
         self.assertFalse('green' in valideyes)
-        self.assertFalse('#ffffff' in valideyes)
         self.assertFalse('amblu' in valideyes)
         self.assertFalse('hzloth' in valideyes)
+        self.assertFalse('#ffffff' in valideyes)
         return
 
     def test_heights(self):
@@ -94,5 +95,8 @@ class TestValidityCheckers(unittest.TestCase):
         self.assertFalse(self.v.isValidHeight('151in'))
         return
 
-if __name__ == '__main__':
+def main():
     unittest.main()
+
+if __name__ == '__main__':
+    main()
