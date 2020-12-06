@@ -4,7 +4,7 @@
 def main():
     questions = 0
     questionnaire = set()
-    for line in open("input.txt"):
+    for line in open("testdata.txt"):
         letters = sorted(line.strip("\n"))
         if not letters: # blank line
             questions += len(questionnaire)
