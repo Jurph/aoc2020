@@ -7,11 +7,11 @@ def main():
     newletters = set()
     questionnaire = set()
     newgroup = True
-    for line in open("testdata.txt"):
+    for line in open("input.txt"):
         letters = sorted(line.strip("\n"))
         if not letters: # blank line
             questions += len(questionnaire)
-            print("ended a group - sum is {}".format(questions))
+            print("Questionnaire answer {} has length {} - sum is currently {}".format(questionnaire, len(questionnaire), questions))
             questionnaire = set()
             newletters = set()
             newgroup = True
@@ -25,7 +25,7 @@ def main():
             questionnaire = questionnaire.intersection(newletters)
             newgroup = False
 
-        print("Questionnaire answer {} has length {} - sum is currently {}".format(questionnaire, len(questionnaire), questions))
+        
     print(questions)
     return   
 
