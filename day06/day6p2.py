@@ -4,18 +4,19 @@
 
 def main():
     questions = 0
-    newletters = set()
     questionnaire = set()
     newgroup = True
     for line in open("input.txt"):
         letters = sorted(line.strip("\n"))
+        newletters = set()
         if not letters: # blank line
             questions += len(questionnaire)
-            print("Questionnaire answer {} has length {} - sum is currently {}".format(questionnaire, len(questionnaire), questions))
+            print("Overlap: {} of size {} - sum: {}".format(sorted(questionnaire), len(questionnaire), questions))
             questionnaire = set()
             newletters = set()
             newgroup = True
         elif newgroup:
+            newletters = set()
             for char in letters:
                 questionnaire.add(char)
             newgroup = False
@@ -25,7 +26,6 @@ def main():
             questionnaire = questionnaire.intersection(newletters)
             newgroup = False
 
-        
     print(questions)
     return   
 
