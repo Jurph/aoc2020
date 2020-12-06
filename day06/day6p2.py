@@ -1,30 +1,29 @@
 #!/usr/bin/python3
 # Day 6, Part 2 of Advent of Code 2020
-# Must not record a yes from *any* party, but instead an answer from *every* party.
+# Records questions to which *every* party in a group answers "yes"
 
 def main():
-    questions = 0
-    questionnaire = set()
+    sum = 0
+    survey = set()
     newgroup = True
     for line in open("input.txt"):
         letters = sorted(line.strip("\n"))
         newletters = set()
-        if not letters: # blank line
-            questions += len(questionnaire)
-            print("Overlap: {} of size {} - sum: {}".format(sorted(questionnaire), len(questionnaire), questions))
-            questionnaire = set()
+        if not letters:  # letters = sorted(line.strip) returns an empty set for blank lines, which is bool False
+            sum += len(survey)
+            print("Overlap: {} of size {} - sum: {}".format(sorted(survey), len(survey), sum))
+            survey = set()
             newgroup = True
         elif newgroup:
             for char in letters:
-                questionnaire.add(char)
+                survey.add(char)
             newgroup = False
         else:
             for char in letters:
                 newletters.add(char)
-            questionnaire = questionnaire.intersection(newletters)
+            survey = survey.intersection(newletters)
             newgroup = False
-
-    print(questions)
+    print(sum)
     return   
 
 
