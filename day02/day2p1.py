@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Day 2, Part 1 of Advent of Code 2020
 
-# Sketch in a generic class for holding the input
+# Generic class for holding the input
 class Problem():
     def __init__(self, filename):
         rows = []
@@ -13,13 +13,9 @@ class Problem():
 
 class Entry():
     def __init__(self, row):
-        elements = row.split(" ")
-        self.quantity_string = elements[0]
-        self.target_character = elements[1].rstrip(":")
-        self.password = elements[2]
-        minmax = self.quantity_string.split("-")
-        self.minimum = int(minmax[0])
-        self.maximum = int(minmax[1])
+        self.quantity_string, self.target_character, self.password = row.replace(':', '').split(" ")
+        self.minimum, self.maximum = map(int, self.quantity_string.split("-"))
+        # "policy" allows us to access "Entry.policy" for an entry and print its status 
         self.policy = "{} should contain {} - {} instances of character \"{}\"; detected {}.".format(self.password, self.minimum, self.maximum, self.target_character, self.password.count(self.target_character))
         return
 

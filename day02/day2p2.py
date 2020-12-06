@@ -2,7 +2,7 @@
 # Day 2, Part 2 of Advent of Code 2020
 # Change in policy - now "min" and "max" are positional
 
-# Sketch in a generic class for holding the input
+# Generic class for holding the input
 class Problem():
     def __init__(self, filename):
         rows = []
@@ -14,13 +14,8 @@ class Problem():
 
 class Entry():
     def __init__(self, row):
-        elements = row.split(" ")
-        self.quantity_string = elements[0]
-        self.target_character = elements[1].rstrip(":")
-        self.password = elements[2]
-        positions = self.quantity_string.split("-")
-        self.firstposition = int(positions[0])
-        self.secondposition = int(positions[1])
+        self.quantity_string, self.target_character, self.password = row.replace(':', '').split(" ")
+        self.firstposition, self.secondposition = map(int, self.quantity_string.split("-"))
         return
 
     def isvalid(self):
