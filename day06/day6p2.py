@@ -13,10 +13,8 @@ def main():
             questions += len(questionnaire)
             print("Overlap: {} of size {} - sum: {}".format(sorted(questionnaire), len(questionnaire), questions))
             questionnaire = set()
-            newletters = set()
             newgroup = True
         elif newgroup:
-            newletters = set()
             for char in letters:
                 questionnaire.add(char)
             newgroup = False
