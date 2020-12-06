@@ -54,8 +54,7 @@ def main():
     product = 1
     slopes = [(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)]
     for slope in slopes:
-        rows = slope[0]
-        columns = slope[1]
+        rows, columns = slope[:]
         trees = checkslope(rows, columns)
         print("Found {} trees going downhill with slope {}:{}.".format(trees, columns, rows))
         product *= trees 
