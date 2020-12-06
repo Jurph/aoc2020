@@ -5,13 +5,14 @@ def main():
     questions = 0
     questionnaire = set()
     for line in open("input.txt"):
-        letters = sorted(line)
-        if not letters:
-            questions = len(questionnaire)
+        letters = sorted(line.strip("\n"))
+        if not letters: # blank line
+            questions += len(questionnaire)
             questionnaire = set()
         else:
             for char in letters:
                 questionnaire.add(char)
+            print("Questionnaire answer {} has length {} - sum is currently {}".format(questionnaire, len(questionnaire), questions))
     print(questions)
     return   
 
